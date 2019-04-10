@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import CommerViews from '@/views/commerViews'
+import Login from '@/views/login/index'
 import Layout from '@/views/layout/layout'
 import HomeMain from '@/views/index/mainIndex'
 
@@ -31,8 +31,16 @@ const AddArticleEditor = () => import('@/views/article/addArticleEditor')
 
 Vue.use(Router)
 let defaultRouter = [
-  { path: '/',
+  {
+    path: '/',
     redirect: '/index',
+    hidden: true,
+    children: []
+  },
+  {
+    path: '/login',
+    component: Login,
+    name: '',
     hidden: true,
     children: []
   },
@@ -280,6 +288,8 @@ let addRouter = [
   }
 ]
 
-let fullPath = defaultRouter.concat(addRouter)
+export default new Router({
+  routes: defaultRouter
+})
 
-export {defaultRouter, addRouter, fullPath}
+export { defaultRouter, addRouter }
