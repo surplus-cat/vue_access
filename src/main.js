@@ -10,8 +10,6 @@ import 'font-awesome/css/font-awesome.css'
 import App from './App.vue'
 import router from './router'
 import store from './vuex'
-import componentConfig from './extra/componentConfigs'
-import axios from 'axios'
 // import Worker from './test.worker.js';
 
 Vue.config.productionTip = false
@@ -56,6 +54,13 @@ router.beforeEach((to, from, next) => {
     next({ path: '/login' })
   }
 })
+
+store.commit('initTab', sessionStorage.tabnavBox ? JSON.parse(sessionStorage.tabnavBox) : [
+  {
+    title: '主页',
+    path: '/index'
+  }
+])
 
 // 再实例化vue
 new Vue({
