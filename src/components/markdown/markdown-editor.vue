@@ -1,7 +1,7 @@
 <template>
   <div class="markdownBox">
-    <link rel="stylesheet" href="./static/markdown/css/editormd.min.css">
-    <link rel="stylesheet" href="./static/markdown/css/googleCodePrettifyThemes/previewTheme-xu.css">
+    <link rel="stylesheet" href="markdown/css/editormd.min.css">
+    <link rel="stylesheet" href="markdown/css/googleCodePrettifyThemes/previewTheme-xu.css">
     <div :id="editorId"></div>
   </div>
 </template>
@@ -58,10 +58,11 @@ export default {
     },
     initEditor: function () {
       (async () => {
-        await this.fetchScript('./static/markdown/jquery.min.js')
-        await this.fetchScript('./static/markdown/editormd.min.js')
-        // await this.fetchScript('./static/editor.md/editormd.js');
+        await this.fetchScript('markdown/jquery.min.js')
+        await this.fetchScript('markdown/editormd.js')
+
         this.$nextTick(() => {
+          console.log(window)
           let editor = window.editormd(this.editorId, this.getConfig())
           editor.on('load', () => {
             setTimeout(() => { // hack bug: 一个页面多个编辑器只能初始化其中一个数据问题

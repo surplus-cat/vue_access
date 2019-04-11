@@ -12,59 +12,19 @@ import Router from 'vue-router'
 import store from './vuex'
 import componentConfig from './extra/componentConfigs'
 import axios from 'axios'
-//import Worker from './test.worker.js';
+// import Worker from './test.worker.js';
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)
-Vue.use(Router);
+Vue.use(Router)
 
-//  获取角色信息，根据用户权限动态加载路由
-// router.beforeEach((to, from, next) => {
-//   // console.log(store.getters.token)
-//   // debugger
-
-//   if (store.getters.token) {
-//     store.dispatch('setToken', store.getters.token)
-//     if (to.path === '/login') {
-//       next({ path: '/' })
-//     } else {
-//       if (!store.getters.info.role) {
-//         // const role = ['/markdown', '/erji', '/erji2', '/siji', '/wuji']
-//         !async function getAddRouters() {
-//           await store.dispatch('getInfo', store.getters.token)
-//           await store.dispatch('newRoutes', store.getters.info.role)
-//           console.log(store.getters.addRouters)
-//           await router.addRoutes(store.getters.addRouters)
-//           next({ path: '/index' })
-//         }()
-//       } else {
-//         let is404 = to.matched.some(record => {
-//           if (record.meta.role) {
-//             return record.meta.role.indexOf(store.getters.info.role) === -1
-//           }
-//         })
-//         if (is404) {
-//           next({ path: '/404' })
-//           return false
-//         }
-//         next()
-//       }
-//     }
-//   } else {
-//     if (to.path === '/login') {
-//       next()
-//     }
-//     next({ path: '/login' })
-
-//   }
-// })
 axios.post('https://www.easy-mock.com/mock/5c9da69927388d303f3837b7/example/login', {
   username: '1111',
   password: '1111'
 }).then(res => {
   sessionStorage.user = JSON.stringify(res.data)
 })
-//if (!sessionStorage.user) location.href = 'http://localhost:8964/login.html'
+// if (!sessionStorage.user) location.href = 'http://localhost:8964/login.html'
 const menu = sessionStorage.user ? JSON.parse(sessionStorage.user).data.userMenu : []
 
 // 创建 worker 实例
@@ -75,7 +35,7 @@ const menu = sessionStorage.user ? JSON.parse(sessionStorage.user).data.userMenu
 // };
 
 // worker.postMessage('11111')
-//aDedicatedWorker.postMessage(menu, [menu.abBuffer]);
+// aDedicatedWorker.postMessage(menu, [menu.abBuffer]);
 // worker.postMessage(JSON.stringify(menu));
 
 // 处理数据
@@ -90,10 +50,6 @@ var newData = menu.map(v => {
 //   return worker;
 // }
 
-
-
-//console.log(newData)
-
 // var jsFileURI = require('');
 // var worker = new Worker("./test.worker.js", { name : 'myWorker' });
 
@@ -106,8 +62,6 @@ var newData = menu.map(v => {
 // worker.addEventListener('message', function(e) {
 //   console.log(e.data);
 // }, false);
-
-
 
 function assignRouter (prev, next) {
   prev.reduce((a, b) => {
@@ -149,9 +103,19 @@ const init = function (data) {
   // componentConfigs 是本地的组件配置
   let routes = assignRouter(data, componentConfig)
 
-  //console.log(routes)
+  // console.log(routes)
   // 实例化路由
   let router = new Router({ routes })
+
+  router.beforeEach((to, from, next) => {
+    if (!sessionStorage.user) {
+      console.log('token丢失')
+      // location.href = 'http://localhost:8964/login.html'
+      next()
+    } else {
+      next()
+    }
+  })
   store.commit('setRouters', routes)
   store.commit('initTab', sessionStorage.tabnavBox ? JSON.parse(sessionStorage.tabnavBox) : [
     {
@@ -167,8 +131,7 @@ const init = function (data) {
     render: h => h(App)
   }).$mount('#app')
 
-  //let hasInstantiated = router.resolve({name: '发布文章'}).route.matched.length !== 0
-  //console.log(hasInstantiated )
+  
 }
 
 init(newData)

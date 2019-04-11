@@ -27,3 +27,5 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+目前编辑器无法使用就是因为无法正常导入editormd.min.js

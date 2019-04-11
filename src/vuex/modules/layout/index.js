@@ -48,7 +48,7 @@ export default {
     },
     removeOtherTab (state, arg) {
       state.tabnavBox = [{
-        title: 'home',
+        title: '主页',
         path: '/index'
       }]
       if (arg.all) {
@@ -70,20 +70,20 @@ export default {
     }
   },
   actions: {
-    addTab ({commit}, arg) {
+    addTab ({ commit }, arg) {
       commit('addTab', arg)
     },
-    openMenu ({commit}, arg) {
+    openMenu ({ commit }, arg) {
       commit('openMenu', arg)
     },
-    removeTab ({commit}, arg) {
+    removeTab ({ commit }, arg) {
       commit('removeTab', arg)
     },
-    removeOtherTab ({commit}, arg) {
+    removeOtherTab ({ commit }, arg) {
       commit('removeOtherTab', arg)
     },
-    collapse ({commit}, arg) {
+    collapse ({ commit }, arg) {
       commit('collapse', arg)
-    },
+    }
   }
 }

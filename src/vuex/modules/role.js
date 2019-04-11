@@ -24,10 +24,10 @@ export default {
     }
   },
   actions: {
-    getInfo ({commit}, token) {
+    getInfo ({ commit }, token) {
       commit('getInfo', token)
     },
-    setRole ({commit}, options) {
+    setRole ({ commit }, options) {
       // 权限测试
       commit('setRole', options)
     }

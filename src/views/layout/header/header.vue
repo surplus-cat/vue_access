@@ -41,17 +41,17 @@ export default {
   components: {
     tabNav
   },
-  data() {
+  data () {
     return {
       isfullScreen: true,
-      avatar: './static/images/icon.jpg'
+      avatar: './public/images/icon.jpg'
     }
   },
   methods: {
-    collapse() {
+    collapse () {
       this.$store.dispatch('collapse')
     },
-    fullScreen() {
+    fullScreen () {
       if (this.isfullScreen) {
         var docElm = document.documentElement
         if (docElm.requestFullscreen) {
@@ -77,9 +77,9 @@ export default {
         this.isfullScreen = true
       }
     },
-    handleCommand(command) {
+    handleCommand (command) {
       if (command === 'logout') {
-        Cookies.remove('token');
+        Cookies.remove('token')
         location.href = 'http://localhost:8964/login.html'
       }
     }
