@@ -383,6 +383,8 @@
 
             settings.pluginPath = (settings.pluginPath === "") ? settings.path + "../plugins/" : settings.pluginPath;
 
+            console.log(settings.pluginPath, settings.path)
+
             this.state.watching = (settings.watch) ? true : false;
 
             if ( !editor.hasClass("editormd") ) {
@@ -560,6 +562,7 @@
             }
 
             editormd.loadScript(loadPath + "codemirror/codemirror.min", function() {
+                console.log(loadPath)
                 editormd.$CodeMirror = CodeMirror;
 
                 editormd.loadScript(loadPath + "codemirror/modes.min", function() {
