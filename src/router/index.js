@@ -56,7 +56,8 @@ let defaultRouter = [
         iconCls: 'fa fa-dashboard', // 图标样式class
         name: '主页',
         component: HomeMain,
-        children: []
+        children: [],
+        display: true
       }
     ]
   },
