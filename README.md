@@ -28,4 +28,4 @@ npm run lint
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
-目前编辑器无法使用就是因为无法正常导入editormd.min.js
+vue-cli3.0 public文件夹内的资源 引入无需加地址前缀，直接引用即可
