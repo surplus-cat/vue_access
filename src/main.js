@@ -11,6 +11,7 @@ import App from './App.vue'
 import Router from 'vue-router'
 import store from './vuex'
 import componentConfig from './extra/componentConfigs'
+import _import from './extra/_import'
 import axios from 'axios'
 // import Worker from './test.worker.js';
 
@@ -63,30 +64,48 @@ var newData = menu.map(v => {
 //   console.log(e.data);
 // }, false);
 
-function assignRouter (prev, next) {
-  prev.reduce((a, b) => {
+// function assignRouter (prev, next) {
+//   prev.reduce((a, b) => {
+//     if (b.children && b.children.length > 0) {
+//       if (b.component) {
+//         let squs = Object.keys(next).findIndex(v => { return b.component.indexOf(v) > -1 })
+//         let nums = Object.keys(Object.values(next)[squs]).findIndex(v => { return b.component.indexOf(v) > -1 })
+
+//         b.component = Object.values(next)[squs][Object.keys(Object.values(next)[squs])[nums]]
+//       }
+//       b.children.filter(k => {
+//         let index = Object.keys(next).findIndex(v => { return k.component.indexOf(v) > -1 })
+//         let idx = Object.keys(Object.values(next)[index]).findIndex(v => { return k.component.indexOf(v) > -1 })
+
+//         k.component = Object.values(next)[index][Object.keys(Object.values(next)[index])[idx]]
+//       })
+//     } else {
+//       if (b.component) {
+//         let squ = Object.keys(next).findIndex(v => { return b.component.indexOf(v) > -1 })
+//         let num = Object.keys(Object.values(next)[squ]).findIndex(v => { return b.component.indexOf(v) > -1 })
+//         b.component = Object.values(next)[squ][Object.keys(Object.values(next)[squ])[num]]
+//       }
+//     }
+//   }, [])
+//   return prev
+// }
+
+function assignRouter (routerlist) {
+  routerlist.reduce((a, b) => {
     if (b.children && b.children.length > 0) {
       if (b.component) {
-        let squs = Object.keys(next).findIndex(v => { return b.component.indexOf(v) > -1 })
-        let nums = Object.keys(Object.values(next)[squs]).findIndex(v => { return b.component.indexOf(v) > -1 })
-
-        b.component = Object.values(next)[squs][Object.keys(Object.values(next)[squs])[nums]]
+        b.component = _import(b.component)
       }
       b.children.filter(k => {
-        let index = Object.keys(next).findIndex(v => { return k.component.indexOf(v) > -1 })
-        let idx = Object.keys(Object.values(next)[index]).findIndex(v => { return k.component.indexOf(v) > -1 })
-
-        k.component = Object.values(next)[index][Object.keys(Object.values(next)[index])[idx]]
+        k.component = _import(k.component)
       })
     } else {
       if (b.component) {
-        let squ = Object.keys(next).findIndex(v => { return b.component.indexOf(v) > -1 })
-        let num = Object.keys(Object.values(next)[squ]).findIndex(v => { return b.component.indexOf(v) > -1 })
-        b.component = Object.values(next)[squ][Object.keys(Object.values(next)[squ])[num]]
+        b.component = _import(b.component)
       }
     }
   }, [])
-  return prev
+  return routerlist
 }
 
 // new Login(function (err, data) {
@@ -101,8 +120,8 @@ function assignRouter (prev, next) {
 const init = function (data) {
   // 先配置路由信息
   // componentConfigs 是本地的组件配置
-  let routes = assignRouter(data, componentConfig)
-
+  let routes = assignRouter(data)
+  console.log(routes)
   // console.log(routes)
   // 实例化路由
   let router = new Router({ routes })
@@ -130,8 +149,6 @@ const init = function (data) {
     router,
     render: h => h(App)
   }).$mount('#app')
-
-  
 }
 
 init(newData)
